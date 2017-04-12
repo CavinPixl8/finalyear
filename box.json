@@ -9,6 +9,6 @@
         "presidecms":"preside"
     },
     "dependencies":{
-        "presidecms":"stable"
+        "presidecms":"10.8.0-snapshot52"
     }
 }
