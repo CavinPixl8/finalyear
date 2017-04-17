@@ -20,6 +20,9 @@ component extends="preside.system.config.Config" {
 		_setupInterceptors();
 
 		settings.notificationTopics.append( "newSubjectAdded" );
+		settings.notificationTopics.append( "newStudentAdded" );
+
+		coldbox.requestContextDecorator = "app.decorators.RequestContextDecorator";
 	}
 
 	private void function _setupInterceptors(){
