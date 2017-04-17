@@ -2,7 +2,7 @@ component {
 
 	private string function datatable( event, rc, prc, args={} ) {
 
-		return "A new subject was added to " & renderLabel ( "program", args.program );
+		return "A new student for " & renderLabel ( "program", args.program ) & " was added to the website.";
 	}
 
 	private string function full( event, rc, prc, args={} ) {

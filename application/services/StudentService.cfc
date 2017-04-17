@@ -7,18 +7,55 @@ component {
 		return this;
 	}
 
-	public query function getAllStudentsFromProgram( required string program ) {
+	public query function getAllStudentData( string program="" ) {
+
+		var filter = "1=1"
+		if ( len( arguments.program ) ){
+			filter = { "program.label" = arguments.program }
+		}
+
 		return _getPresideObjectService().selectData(
 			  objectName   = "student"
-			, selectFields = [ "name", "student_id", "email" ]
-			, filter       = { "program" = arguments.program }
+			, selectFields = [ "id", "name", "student_id", "email", "program.label as program" ]
+			, filter       = filter
 		);
 	}
+
+	public query function getAllPrograms() {
+		return _getPresideObjectService().selectData(
+			  objectName   = "program"
+			, selectFields = [ "label" ]
+		);
+	}
+
 	public query function getStudentDataById( required string id ) {
 		return _getPresideObjectService().selectData(
 			  objectName   = "student"
-			, id           = arguments.id
-			, selectFields = [ "name", "student_id", "email" ]
+			, filter       = { "id"=arguments.id }
+			, selectFields = [ "id", "name", "student_id", "email", "program" ]
+		);
+	}
+
+	public void function setStudentSubjectStatus( required string studentObjectId, required string subject ){
+
+		_getPresideObjectService().insertData(
+			  objectName = "student_subject_status"
+			, data = {
+				  student   = arguments.studentObjectId
+				, subject   = arguments.subject
+				, completed = 0
+			  }
+			, insertManyToManyRecords = true
+		)
+	}
+
+	public query function getStudentSubjectStatus( required string studentObjectId ) {
+
+		return _getPresideObjectService().selectData(
+			  objectName   = "student_subject_status"
+			, filter       = { "student"=arguments.studentObjectId }
+			, selectFields = [ "course_name as subject", "course_code", "completed" ]
+			, orderBy      = "subject.course_code ASC"
 		);
 	}
 
@@ -45,12 +82,19 @@ component {
 			  objectName   = "program"
 			, id           = arguments.program
 			, selectFields = [ "shortname" ]
-		)
+		);
 
 		if ( programQuery.shortname != "DCSMY"){
 			return false;
 		}
 		return true;
+	}
+
+	public void function deleteStudentSubjectStatusData( required string student ){
+		_getPresideObjectService().deleteData(
+			  objectName = "student_subject_status"
+			, filter     = { "student" = arguments.student }
+		);
 	}
 
 	private any function _getPresideObjectService() {
