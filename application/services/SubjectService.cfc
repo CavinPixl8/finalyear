@@ -15,6 +15,22 @@ component {
 		);
 	}
 
+	public query function getAllSubjectsFromProgram( required string program ) {
+		return _getPresideObjectService().selectData(
+			  objectName   = "subject"
+			, filter       = { "program" = arguments.program }
+			, selectFields = [ "id as subject_id" ]
+		);
+	}
+
+	public string function getCourseNameByCourseCode( required string courseCode ) {
+		return _getPresideObjectService().selectData(
+			  objectName   = "subject"
+			, filter       = { "course_code" = arguments.courseCode }
+			, selectFields = [ "course_name" ]
+		).course_name;
+	}
+
 	public string function validateSubjectData( required struct data ){
 
 		var programQuery = _getPresideObjectService().selectData(
