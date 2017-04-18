@@ -78,4 +78,12 @@ component extends="coldbox.system.Interceptor" {
 			break;
 		}
 	}
+	public void function postDeleteObjectData( required any event, required struct interceptData ){
+		var objectName = arguments.interceptData.objectName ?: "";
+
+		switch( objectName ){
+			case "student":
+			break;
+		}
+	}
 }
