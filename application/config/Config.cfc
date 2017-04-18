@@ -15,6 +15,18 @@ component extends="preside.system.config.Config" {
 		settings.ckeditor.defaults.stylesheets.append( "css-bootstrap" );
 		settings.ckeditor.defaults.stylesheets.append( "css-layout" );
 
-		settings.features.websiteUsers.enabled = false;
+		settings.features.websiteUsers.enabled = true;
+
+		_setupInterceptors();
+
+		settings.notificationTopics.append( "newSubjectAdded" );
+		settings.notificationTopics.append( "newStudentAdded" );
+
+		coldbox.requestContextDecorator = "app.decorators.RequestContextDecorator";
+	}
+
+	private void function _setupInterceptors(){
+
+		interceptors.append( { class="app.interceptors.DataChangeInterceptor", properties={} } );
 	}
 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form i18nBaseUri="forms.events.add_new_student:">
+	<tab>
+		<fieldset id="add_new_student">
+			<field name="student_name" control="textInput"  required="true" />
+			<field name="student_id"   control="textInput"  required="true" />
+			<field name="email"        control="emailInput" required="true" />
+		</fieldset>
+	</tab>
+</form>
